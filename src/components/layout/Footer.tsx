@@ -28,7 +28,7 @@ export async function Footer() {
   const t = await getTranslations("footer");
 
   return (
-    <footer className="relative mt-32 border-t border-ink-700/60 bg-ink-1000">
+    <footer className="relative border-t border-ink-700/60 bg-ink-1000">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="max-w-xs">
           <Image

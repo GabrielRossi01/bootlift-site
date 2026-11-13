@@ -73,5 +73,227 @@
     "wasScore": "was {score}",
     "suggestedOf": "Suggested change · {n} of {total}",
     "emptyMain": "No changes on main yet"
+  },
+  "whyNow": {
+    "title": "Spring Boot 4 moves the ground under your code.",
+    "intro": "Boot 4 adopts Jakarta EE 11 and Jackson 3, removes @MockBean and renames 96 configuration properties. Bootlift finds each of them before the upgrade does.",
+    "changesLabel": "What changes in Boot 4",
+    "changes": {
+      "jakarta": "Jakarta EE 11",
+      "jackson": "Jackson 3",
+      "testing": "Testing",
+      "config": "Configuration"
+    },
+    "statsLabel": "Bootlift in numbers",
+    "stats": {
+      "rules": "rules",
+      "properties": "renamed properties",
+      "config": "configuration",
+      "seconds": "Seconds",
+      "secondsLabel": "per analysis"
+    }
+  },
+  "how": {
+    "title": "Three steps, on every pull request.",
+    "intro": "Bootlift runs as one step in your workflow. Nothing to install on the runner, nothing to configure.",
+    "scan": {
+      "title": "Scan",
+      "body": "Reads build files, configuration and Java or Kotlin code as plain text. Nothing is compiled and no JDK is installed."
+    },
+    "score": {
+      "title": "Score",
+      "body": "Every finding weighs on a 0 to 100 readiness score. You get one PR comment, updated on each push, plus the job summary and annotations on the lines."
+    },
+    "guard": {
+      "title": "Guardrail and suggestions",
+      "body": "In pull requests only added lines can fail the job. Legacy code counts in the score but never blocks anyone. Fixes with a certain answer arrive as one-click suggestions."
+    },
+    "legacy": "Unchanged line",
+    "legacyNote": "Counts in the score. Never blocks.",
+    "added": "Added in this PR",
+    "addedNote": "Can fail the job. Comes with a suggestion.",
+    "reads": "Reads",
+    "noJdk": "No JDK · no build",
+    "outComment": "PR comment",
+    "outSummary": "Job summary",
+    "outAnnotations": "Line annotations",
+    "suggestion": "Suggested change",
+    "commit": "Commit suggestion"
+  },
+  "demo": {
+    "title": "Watch it on a real pull request.",
+    "intro": "bootlift-demo scores 94 on main. A pull request with old code drops it to 60 and fails with 6 suggestions. Applying them brings it back to 94, green. The demo repository is written in Portuguese.",
+    "openPrs": "Open the demo pull requests",
+    "full": "Watch the full walkthrough (75 s)",
+    "short": "Back to the short demo",
+    "videoLabel": "Screen recording of the bootlift-demo pull request: Bootlift's suggestions are committed and the pull request goes back to 94 out of 100.",
+    "fullLabel": "Full walkthrough of the bootlift-demo pull request, from the failing check to the approved one.",
+    "play": "Play demo",
+    "pause": "Pause demo",
+    "toQuickstart": "Add it to your workflow"
+  },
+  "rules": {
+    "title": "12 rules, each with a way out.",
+    "intro": "Checked in code, build files and configuration. Four of them fix themselves with one click.",
+    "filterLabel": "Filter rules by severity",
+    "filters": {
+      "all": "All",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "count": "{count, plural, one {# rule} other {# rules}}",
+    "oneClick": "1-click fix",
+    "scopes": {
+      "java": "Code",
+      "build": "Build",
+      "config": "Config"
+    },
+    "before": "Before",
+    "after": "After",
+    "items": {
+      "BOOT_VERSION": "Spring Boot below 3.5 (warning), or on 3.5.x and ready for 4.0 (info).",
+      "JAVA_BASELINE": "Java below 17. Boot 4 requires 17 or newer.",
+      "GRADLE_VERSION": "Gradle wrapper below 8.14, the minimum for the Boot 4 plugin.",
+      "JAKARTA_NAMESPACE": "Jakarta EE imports still on javax.*, such as servlet and persistence.",
+      "JACKSON3_NAMESPACE": "Jackson 2 packages. Boot 4 uses Jackson 3 (tools.jackson); annotations stay where they are.",
+      "MOCKBEAN_REMOVED": "@MockBean and @SpyBean were removed in favour of @MockitoBean and @MockitoSpyBean.",
+      "UNDERTOW_REMOVED": "Undertow was removed: it is not yet compatible with Servlet 6.1.",
+      "SPOCK_REMOVED": "The Spock integration left Boot 4.0. The Spring team announced its return in 4.1.",
+      "SESSION_REMOVED": "Boot no longer configures Spring Session for MongoDB or Hazelcast.",
+      "STARTER_RENAMED": "Renamed starters: web → webmvc, aop → aspectj, oauth2-* → security-oauth2-* and others.",
+      "LAUNCH_SCRIPT": "The launch script for executable jars was removed.",
+      "PROPERTY_RENAMED": "96 renamed properties in application.*, YAML and .properties."
+    },
+    "afterNotes": {
+      "BOOT_VERSION": "then 4.0.x",
+      "SPOCK_REMOVED": "JUnit 5, or Boot 4.1",
+      "SESSION_REMOVED": "Redis or JDBC, or the project's own module"
+    }
+  },
+  "quickstart": {
+    "title": "Add it in one step.",
+    "intro": "Save this workflow in your repository, for example as .github/workflows/bootlift.yml. The next pull request gets a score, a report and suggestions.",
+    "copyWhat": "the workflow",
+    "inputs": "Inputs",
+    "outputs": "Outputs",
+    "permissions": "Permissions",
+    "colName": "Name",
+    "colDefault": "Default",
+    "colDescription": "What it does",
+    "defaultEmpty": "empty",
+    "inputDesc": {
+      "path": "Root of the project to analyze.",
+      "mode": "guardrail or full. Empty means guardrail on pull_request and full on other events.",
+      "fail-on": "Lowest severity that fails the job: none, warning or error.",
+      "comment-on-pr": "Posts or updates the report comment on the PR.",
+      "suggestions": "In guardrail mode, posts each deterministic fix as a one-click suggestion.",
+      "github-token": "Token to read the PR diff and comment. On fork PRs it is read-only and the action only warns."
+    },
+    "outputDesc": {
+      "score": "Readiness score from 0 to 100 for the whole repository.",
+      "blocking": "Findings that can fail the job in the current mode.",
+      "errors": "Findings with error severity in the whole repository."
+    },
+    "permDesc": {
+      "contents": "Read the repository code. actions/checkout already asks for it.",
+      "pr": "Read the PR diff, comment and post suggestions. Without it the report still goes to the job summary."
+    },
+    "versionsTitle": "@v1 or @v1.0.1?",
+    "v1": "Follows every 1.x release: fixes and new rules arrive on their own.",
+    "vExact": "Pins this exact release. You update it by hand."
+  },
+  "score": {
+    "title": "How the score is counted.",
+    "intro": "It starts at 100. Each rule found subtracts its severity weight once, plus 1 for every extra occurrence, up to 10 more per rule. It never goes below 0.",
+    "weights": "Weight per rule",
+    "extra": "Each extra occurrence",
+    "extraValue": "+1",
+    "cap": "Cap per rule",
+    "capValue": "+10",
+    "tryLabel": "Occurrences of JAKARTA_NAMESPACE",
+    "resultLabel": "Penalty for this rule",
+    "scoreLabel": "Score",
+    "note": "Thirty javax imports weigh as one big problem, not thirty."
+  },
+  "contribute": {
+    "title": "Open source. Bring a rule.",
+    "intro": "Bootlift is MIT-licensed and built in the open. Pick the way in that fits what you found.",
+    "paths": {
+      "falsePositive": {
+        "title": "Report a false positive",
+        "body": "Something flagged that shouldn't be? Send the file and the line."
+      },
+      "newRule": {
+        "title": "Suggest a rule",
+        "body": "A Boot 4 change Bootlift doesn't catch yet."
+      },
+      "docs": {
+        "title": "Improve the docs",
+        "body": "The contributing guide has the setup and conventions."
+      },
+      "code": {
+        "title": "Send code",
+        "body": "Start with an issue labelled good first issue."
+      }
+    },
+    "stepsTitle": "From fork to pull request",
+    "steps": {
+      "fork": "Fork the repository",
+      "test": "Install and run the tests",
+      "rule": "Write the rule and its test",
+      "pr": "Bundle and open the pull request"
+    }
+  },
+  "faq": {
+    "title": "Questions before you add it.",
+    "items": {
+      "fork": {
+        "q": "Does it work on pull requests from forks?",
+        "a": "The report does: score, job summary, annotations and fail-on all work. One-click suggestions don't, because the token on fork pull requests is read-only."
+      },
+      "noise": {
+        "q": "Will it flood a legacy repository with comments?",
+        "a": "No. It keeps one comment, updated on every push. In guardrail mode legacy findings appear collapsed in that comment and only count in the score; suggestions go only on added lines, at most 20 per review."
+      },
+      "monorepo": {
+        "q": "What about a monorepo?",
+        "a": "Point path at one service and run the action once per service, for example with strategy.matrix."
+      },
+      "falsePositive": {
+        "q": "I found a false positive. Now what?",
+        "a": "Open the false-positive form with the file and the line. The analysis works line by line, so an import or annotation split across lines can slip through too."
+      },
+      "jdk": {
+        "q": "Do I need a JDK or a build?",
+        "a": "No. Bootlift reads files as text, so it runs in seconds without installing Java or compiling anything."
+      },
+      "cost": {
+        "q": "How much does it cost?",
+        "a": "Nothing. It's free and open source under the MIT license."
+      }
+    },
+    "formLink": "Open the false-positive form"
+  },
+  "finalCta": {
+    "title": "Merge the next PR without new migration debt.",
+    "body": "One step in your workflow. Every pull request after it is checked against Spring Boot 4.",
+    "primary": "Get it on the Marketplace",
+    "secondary": "Star it on GitHub",
+    "checksTitle": "All checks have passed",
+    "checkScore": "Bootlift · Spring Boot 4 readiness",
+    "checkSuggestions": "6 of 6 suggestions committed",
+    "checkDebt": "No new migration debt"
+  },
+  "rail": {
+    "whyNow": "base moved to Spring Boot 4",
+    "how": "bootlift started a check",
+    "demo": "requested changes · 94 → 60",
+    "rules": "reviewed against 12 rules",
+    "quickstart": "all checks passed",
+    "score": "scored 94/100",
+    "contribute": "open for contributions",
+    "faq": "conversation",
+    "final": "ready to merge"
   }
 }

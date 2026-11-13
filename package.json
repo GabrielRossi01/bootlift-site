@@ -16,7 +16,8 @@
     "next": "16.4.6",
     "next-intl": "^4.15.1",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "shiki": "^4.6.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
