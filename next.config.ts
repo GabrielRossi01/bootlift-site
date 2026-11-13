@@ -3,6 +3,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  experimental: {
+    // The root layout lives under [locale], so unmatched URLs need their own 404.
+    globalNotFound: true,
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {

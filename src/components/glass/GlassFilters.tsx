@@ -14,8 +14,13 @@ export function GlassFilters() {
     const data = (navigator as Navigator & { userAgentData?: UAData })
       .userAgentData;
     const chromium = data?.brands?.some((b) => b.brand === "Chromium") ?? false;
+    // A desktop flourish: on touch screens its per-frame cost buys nothing.
+    const finePointer = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
     const supported =
       chromium &&
+      finePointer &&
       CSS.supports("backdrop-filter", "url(#glass-refract) blur(1px)");
     if (supported) document.documentElement.setAttribute("data-refract", "");
   }, []);

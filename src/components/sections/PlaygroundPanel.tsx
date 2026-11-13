@@ -525,7 +525,7 @@ function FindingItem({
         </span>
         <a
           href={`#rule-${f.ruleId}`}
-          className="font-mono text-xs font-bold break-all text-fg underline decoration-transparent underline-offset-2 hover:decoration-fg-muted"
+          className="inline-flex min-h-6 items-center font-mono text-xs font-bold break-all text-fg underline decoration-transparent underline-offset-2 hover:decoration-fg-muted"
         >
           {f.ruleId}
         </a>

@@ -45,6 +45,7 @@ export function Section({
       id={id}
       aria-labelledby={`${id}-title`}
       data-last={last ? "" : undefined}
+      data-tone={tone}
       className={`rail-section relative ${className}`}
     >
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:pl-16">

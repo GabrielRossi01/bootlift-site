@@ -3,12 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
-  animate,
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-} from "motion/react";
-import {
   ArrowLeft,
   CircleCheck,
   CircleX,
@@ -44,7 +38,6 @@ const SCORE: Record<Phase, number> = {
 };
 
 const SUGGESTIONS = 6;
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const isFailing = (phase: Phase) =>
   phase === "drop" || phase === "suggest" || phase === "commit";
@@ -174,21 +167,10 @@ function AnimatedBody({
   t: T;
   still: boolean;
 }) {
-  const value = useMotionValue(SCORE[phase]);
-  const [score, setScore] = useState(SCORE[phase]);
-  useMotionValueEvent(value, "change", (v) => setScore(Math.round(v)));
-
-  useEffect(() => {
-    if (still) {
-      value.set(SCORE[phase]);
-      return;
-    }
-    const controls = animate(value, SCORE[phase], {
-      duration: phase === "pass" ? 1.4 : 1.1,
-      ease: EASE,
-    });
-    return () => controls.stop();
-  }, [phase, still, value]);
+  const score = useTween(
+    SCORE[phase],
+    still ? 0 : phase === "pass" ? 1400 : 1100,
+  );
 
   return <CardBody phase={phase} score={score} t={t} still={still} />;
 }
@@ -329,13 +311,7 @@ function DiffPanel({
   const flagged = isFailing(phase);
   const suggesting = showsSuggestion(phase);
   const committed = phase === "commit";
-  const fade = still
-    ? {}
-    : {
-        initial: { opacity: 0, y: 4 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.45, ease: EASE },
-      };
+  const fade = still ? "" : "pr-row-in";
 
   const footer =
     phase === "main"
@@ -365,13 +341,12 @@ function DiffPanel({
 
       <div className="mt-2.5 h-12 font-mono text-[0.6875rem] leading-6 sm:text-[0.75rem]">
         {phase === "main" ? (
-          <motion.p
+          <p
             key="empty"
-            {...fade}
-            className="flex h-full items-center px-3.5 text-fg-muted"
+            className={`flex h-full items-center px-3.5 text-fg-muted ${fade}`}
           >
             {t("emptyMain")}
-          </motion.p>
+          </p>
         ) : (
           ROWS[phase].map((row, i) => {
             const removed = row.sign === "−";
@@ -387,10 +362,9 @@ function DiffPanel({
                   ? "bg-error/25"
                   : "bg-transparent";
             return (
-              <motion.div
+              <div
                 key={`${phase === "commit" ? "suggest" : phase}-${i}`}
-                {...fade}
-                className={`grid grid-cols-[1.75rem_0.875rem_minmax(0,1fr)] sm:grid-cols-[2.25rem_1rem_minmax(0,1fr)] ${rowBg}`}
+                className={`grid grid-cols-[1.75rem_0.875rem_minmax(0,1fr)] sm:grid-cols-[2.25rem_1rem_minmax(0,1fr)] ${rowBg} ${fade}`}
               >
                 <span className="pr-2 text-right text-fg-muted tabular">
                   {row.line}
@@ -407,7 +381,7 @@ function DiffPanel({
                   </mark>
                   .servlet.{row.cls};
                 </span>
-              </motion.div>
+              </div>
             );
           })
         )}
@@ -433,26 +407,35 @@ function DiffPanel({
             {committed ? t("committed") : t("commit")}
           </span>
           {!still && suggesting && (
-            <motion.span
+            <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 left-1/2 text-fg drop-shadow-[0_2px_4px_oklch(0_0_0/0.6)]"
-              initial={{ x: 52, y: 38, opacity: 0 }}
-              animate={
-                committed
-                  ? { x: 6, y: 2, opacity: [1, 1, 0], scale: [1, 0.82, 1] }
-                  : { x: 6, y: 2, opacity: 1 }
-              }
-              transition={
-                committed
-                  ? { duration: 1, ease: EASE, times: [0, 0.3, 1] }
-                  : { duration: 1, delay: 1.2, ease: EASE }
-              }
+              data-committed={committed ? "" : undefined}
+              className="pr-cursor pointer-events-none absolute top-1/2 left-1/2 text-fg drop-shadow-[0_2px_4px_oklch(0_0_0/0.6)]"
             >
               <MousePointer2 className="size-4 fill-fg" strokeWidth={1.5} />
-            </motion.span>
+            </span>
           )}
         </span>
       </div>
     </div>
   );
+}
+
+/** Counts to `target` with an expo ease-out; `ms = 0` jumps straight there. */
+function useTween(target: number, ms: number) {
+  const [value, setValue] = useState(target);
+  const current = useRef(target);
+  useEffect(() => {
+    const from = current.current;
+    const start = performance.now();
+    let frame = requestAnimationFrame(function tick(now) {
+      const progress = ms === 0 ? 1 : Math.min(1, (now - start) / ms);
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      current.current = Math.round(from + (target - from) * eased);
+      setValue(current.current);
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [target, ms]);
+  return value;
 }

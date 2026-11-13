@@ -99,8 +99,9 @@
     inset: 0;
     z-index: 100;
     pointer-events: none;
-    opacity: 0.045;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    background-image: url("/textures/grain.png");
+    background-size: 64px 64px;
   }
 
   ::selection {
@@ -664,4 +665,142 @@
   );
   -webkit-mask: radial-gradient(34% 80% at 30% 100%, #000, transparent);
   mask: radial-gradient(34% 80% at 30% 100%, #000, transparent);
+}
+
+/* ---------- Motion: the review is traced as you read ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .rail-section {
+      view-timeline: --section block;
+    }
+
+    /* The rail fills as the section scrolls past: grey for neutral events,
+       red where the review fails, green once checks pass. */
+    .rail-section__line::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform-origin: top;
+      background: oklch(0.66 0.026 257 / 0.75);
+      animation: rail-trace linear both;
+      animation-timeline: --section;
+      animation-range: entry 20% exit 40%;
+    }
+
+    .rail-section[data-tone="fail"] .rail-section__line::after {
+      background: oklch(0.7 0.19 23 / 0.75);
+    }
+
+    .rail-section[data-tone="pass"] .rail-section__line::after,
+    .rail-section[data-tone="merged"] .rail-section__line::after {
+      background: oklch(0.8 0.18 152 / 0.7);
+    }
+
+    .rail-section > div > header {
+      animation: lift-in-view linear both;
+      animation-timeline: --section;
+      animation-range: entry 0% entry 45%;
+    }
+
+    .rail-section__anchor .pr-rail__node {
+      animation: node-in linear both;
+      animation-timeline: --section;
+      animation-range: entry 15% entry 40%;
+    }
+  }
+}
+
+@keyframes rail-trace {
+  from {
+    scale: 1 0;
+  }
+}
+
+@keyframes lift-in-view {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+
+@keyframes node-in {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+}
+
+/* PR card beats (CSS, so the hero ships without an animation library). */
+@media (prefers-reduced-motion: no-preference) {
+  .pr-row-in {
+    animation: pr-row-in 450ms var(--ease-lift) both;
+  }
+
+  .pr-cursor {
+    animation: pr-cursor-approach 1s var(--ease-lift) 1.2s both;
+  }
+
+  .pr-cursor[data-committed] {
+    animation: pr-cursor-tap 1s var(--ease-lift) both;
+  }
+}
+
+@keyframes pr-row-in {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+
+@keyframes pr-cursor-approach {
+  from {
+    opacity: 0;
+    translate: 52px 38px;
+  }
+  to {
+    opacity: 1;
+    translate: 6px 2px;
+  }
+}
+
+@keyframes pr-cursor-tap {
+  0% {
+    opacity: 1;
+    translate: 6px 2px;
+    scale: 1;
+  }
+  30% {
+    opacity: 1;
+    scale: 0.82;
+  }
+  100% {
+    opacity: 0;
+    translate: 6px 2px;
+    scale: 1;
+  }
+}
+
+/* Lenis (smooth scrolling): its own CSS, plus native smooth anchors off while it runs. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis textarea,
+.lenis pre {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
