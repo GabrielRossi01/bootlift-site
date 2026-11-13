@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Impeccable: só o arquivo local fica fora do Git
+.impeccable/config.local.json

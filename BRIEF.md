@@ -119,7 +119,36 @@ próprio achado.
 
 ---
 
-## 3. Direção de design
+## 3. Assets (já em `public/`)
+
+| Arquivo | O que é | Onde usar |
+| --- | --- | --- |
+| `brand/bootlift-logo-dark.svg` | Logo completo (símbolo + "Bootlift" + "Spring Boot 4 Readiness Check") para fundo escuro, 356×88 | Nav, footer, OG image |
+| `brand/bootlift-logo-light.svg` | Mesmo logo para fundo claro | Reserva (o site é escuro) |
+| `brand/bootlift-mark.svg` | Só o símbolo "4↑" num quadrado arredondado, 88×88 | Favicon, ícones do app, nav no mobile |
+| `media/demo-short.webm` / `.mp4` | Demo de 17 s: sugestões aplicadas e PR voltando a 94/100 (WebM 0,6 MB, MP4 0,8 MB) | Seção Demo (vídeo principal) |
+| `media/demo-short-poster.jpg` | Último quadro da demo curta (score 94) | `poster` do vídeo curto |
+| `media/demo-short.gif` | A mesma demo curta em GIF (2,4 MB) | Só fallback |
+| `media/demo-full.webm` / `.mp4` | Passo a passo completo de 75 s, do PR reprovado ao aprovado (WebM 2,6 MB, MP4 3,6 MB) | Botão "Ver o passo a passo completo" (carregar só ao clicar, `preload="none"`) |
+| `media/demo-full-poster.jpg` | Primeiro quadro do passo a passo | `poster` do vídeo completo |
+
+Os vídeos foram gravados no tema escuro do GitHub, com 1280 px de largura.
+
+### Cores extraídas do logo
+
+| Token sugerido | Hex | Origem no logo |
+| --- | --- | --- |
+| `brand-400` (verde principal) | `#4ADE80` | "lift" e o ponto do símbolo |
+| `brand-300` | `#86EFAC` | Subtítulo "Spring Boot 4 Readiness Check" |
+| `brand-600` | `#16A34A` | Versão para fundo claro |
+| `brand-700` | `#15803D` | Versão para fundo claro |
+| `ink-900` | `#0F172A` | Fundo do símbolo |
+| `ink-700` | `#334155` | Borda do símbolo |
+
+Use esses valores como âncora e derive o resto da escala (fundos, superfícies,
+bordas, brilhos) com a Impeccable. O verde é acento, não cor de fundo.
+
+## 4. Direção de design
 
 **Use a skill Impeccable em todas as fases.** Siga as regras anti "AI slop"
 dela. Antes de entregar cada fase, rode a auditoria/crítica da skill e corrija
@@ -136,8 +165,8 @@ Warp), **sem copiar nenhum deles**.
 
 - Fundo quase preto com profundidade (gradientes sutis, ruído/grain leve), sem
   "preto chapado" e sem gradiente roxo genérico.
-- **Cor de marca:** extraia o verde exato dos SVGs do logo (`public/brand/`) e
-  monte a escala de cores a partir dele. O verde é acento: brilhos, foco,
+- **Cor de marca:** o verde do logo (`#4ADE80`, veja a seção 3) é a âncora da
+  escala de cores. O verde é acento: brilhos, foco,
   estados de sucesso e o score subindo. Não pinte tudo de verde.
 - Cores semânticas das severidades, consistentes no site todo:
   `error` vermelho, `warning` âmbar, `info` azul (iguais às bolinhas
@@ -206,7 +235,7 @@ Implementação:
    diferença entre código legado (só score) e código novo (bloqueia + sugere).
 5. **Demo real:** o vídeo da demo numa moldura de navegador em vidro, com link
    para os PRs do `bootlift-demo`. Use `<video autoplay muted loop playsinline>`
-   com WebM/MP4 (veja Assets). O GIF fica só como fallback.
+   com WebM/MP4 (veja a seção 3, Assets). O GIF fica só como fallback.
 6. **Playground:** área para colar um arquivo (ou escolher um exemplo pronto:
    `pom.xml` Boot 3.3, `build.gradle.kts`, `application.yml`, um teste com
    `@MockBean`). Mostra em tempo real: score animado, versões detectadas,
@@ -237,7 +266,7 @@ Implementação:
 
 ---
 
-## 4. Requisitos de qualidade (critérios de aceite)
+## 5. Requisitos de qualidade (critérios de aceite)
 
 - Lighthouse (mobile) ≥ 95 em Performance, Acessibilidade, Boas práticas e SEO.
 - LCP < 2,5 s, CLS < 0,05. Nenhuma imagem sem `width`/`height`.
@@ -246,7 +275,8 @@ Implementação:
   `prefers-reduced-transparency` respeitados, contraste real sobre o vidro.
 - Responsivo de 360 px a 1920 px, revisado em 375, 768, 1280 e 1536.
 - SEO: metadata por idioma, Open Graph gerado com `next/og` (logo + headline +
-  fundo da marca), `sitemap.xml`, `robots.txt`, favicon a partir do logo.
+  fundo da marca), `sitemap.xml`, `robots.txt`, favicon a partir do
+  `bootlift-mark.svg`.
 - Testes: o playground com os exemplos prontos deve dar o mesmo resultado da
   action (o `pom.xml` Boot 3.3 de exemplo precisa gerar achados de
   `BOOT_VERSION`, `STARTER_RENAMED` etc.). Crie ao menos testes unitários do
@@ -255,7 +285,7 @@ Implementação:
 
 ---
 
-## 5. Fases de trabalho (pare no fim de cada uma)
+## 6. Fases de trabalho (pare no fim de cada uma)
 
 0. **Plano:** leia este brief, veja os assets em `public/`, rode
    `/impeccable init` se ainda não rodou, e me mostre o plano de design
