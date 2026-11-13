@@ -1,26 +1,806 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Bootlift tokens.
+ * Anchors from the logo: #4ADE80 (brand-400), #86EFAC (brand-300),
+ * #16A34A (brand-600), #15803D (brand-700), #0F172A (ink-900), #334155 (ink-700).
+ * Everything else is derived in OKLCH around those anchors.
+ */
+@theme {
+  --color-*: initial;
+
+  --color-ink-1000: oklch(0.135 0.016 262);
+  --color-ink-950: oklch(0.165 0.022 263);
+  --color-ink-900: #0f172a;
+  --color-ink-850: oklch(0.245 0.032 262);
+  --color-ink-800: oklch(0.29 0.036 260);
+  --color-ink-700: #334155;
+  --color-ink-600: oklch(0.45 0.04 257);
+
+  --color-fg: oklch(0.965 0.006 250);
+  --color-fg-muted: oklch(0.76 0.022 255);
+  --color-fg-subtle: oklch(0.66 0.026 257);
+
+  --color-brand-100: oklch(0.95 0.05 155);
+  --color-brand-300: #86efac;
+  --color-brand-400: #4ade80;
+  --color-brand-500: oklch(0.72 0.19 150);
+  --color-brand-600: #16a34a;
+  --color-brand-700: #15803d;
+  --color-brand-950: oklch(0.24 0.06 155);
+
+  --color-error: oklch(0.7 0.19 23);
+  --color-warning: oklch(0.84 0.16 84);
+  --color-info: oklch(0.71 0.16 255);
+
+  --color-white: #fff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-display: var(--font-archivo), ui-sans-serif, sans-serif;
+  --font-sans: var(--font-atkinson), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --ease-lift: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --radius-pill: 999px;
+  --radius-glass: 1.25rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ---------- Base ---------- */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-ink-1000);
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    scrollbar-color: var(--color-ink-700) var(--color-ink-1000);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-ink-1000);
+    background-image:
+      radial-gradient(
+        120% 60% at 50% -10%,
+        oklch(0.21 0.04 262 / 0.9),
+        transparent 70%
+      ),
+      linear-gradient(
+        180deg,
+        var(--color-ink-1000),
+        var(--color-ink-950) 60%,
+        var(--color-ink-1000)
+      );
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Static film grain: a fixed overlay, never backdrop-filter. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("/textures/grain.png");
+    background-size: 64px 64px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-400);
+    color: var(--color-ink-1000);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-400);
+    outline-offset: 3px;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
+    font-variant-ligatures: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------- Type ---------- */
+
+@utility type-display {
+  font-family: var(--font-display);
+  font-stretch: 118%;
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  font-feature-settings: "ss01";
+}
+
+@utility text-display-1 {
+  /* Capped by viewport height too, so the hero proof stays in the first screen. */
+  font-size: clamp(2.6rem, min(1.4rem + 5.2vw, 1rem + 8.4vh), 6rem);
+  line-height: 0.95;
+}
+
+@utility text-display-2 {
+  font-size: clamp(2rem, 1.35rem + 2.6vw, 3.5rem);
+  line-height: 1.02;
+}
+
+@utility text-display-3 {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  line-height: 1.08;
+}
+
+@utility text-lede {
+  font-size: clamp(1.0625rem, 0.98rem + 0.45vw, 1.3125rem);
+  line-height: 1.5;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Liquid glass ---------- */
+
+@layer components {
+  .glass {
+    --glass-blur: 20px;
+    --glass-sat: 160%;
+    --glass-tint: oklch(0.165 0.022 263 / 0.6);
+    --glass-radius: var(--radius-glass);
+
+    position: relative;
+    isolation: isolate;
+    border-radius: var(--glass-radius);
+    background-color: var(--glass-tint);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    box-shadow:
+      inset 0 0 0 1px oklch(1 0 0 / 0.07),
+      0 1px 2px oklch(0 0 0 / 0.35),
+      0 18px 40px -12px oklch(0 0 0 / 0.65);
+  }
+
+  .glass[data-glass="hero"] {
+    --glass-blur: 24px;
+    --glass-sat: 170%;
+    --glass-tint: oklch(0.165 0.022 263 / 0.62);
+    --glass-radius: 1.5rem;
+    box-shadow:
+      inset 0 0 0 1px oklch(1 0 0 / 0.08),
+      0 2px 4px oklch(0 0 0 / 0.35),
+      0 40px 80px -24px oklch(0 0 0 / 0.75);
+  }
+
+  .glass[data-glass="chip"] {
+    --glass-blur: 12px;
+    --glass-sat: 150%;
+    --glass-tint: oklch(0.165 0.022 263 / 0.55);
+    --glass-radius: var(--radius-pill);
+    box-shadow:
+      inset 0 0 0 1px oklch(1 0 0 / 0.08),
+      0 1px 2px oklch(0 0 0 / 0.3),
+      0 8px 20px -10px oklch(0 0 0 / 0.6);
+  }
+
+  /* 1px highlight: bright at the top edge, fading down the sides. */
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      oklch(1 0 0 / 0.3),
+      oklch(1 0 0 / 0.06) 35%,
+      oklch(1 0 0 / 0.02) 70%,
+      oklch(1 0 0 / 0.08)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  /* Specular sheen that follows the pointer (set by useSpecular). */
+  .glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--spec-o, 0);
+    transition: opacity 400ms var(--ease-out-quart);
+    background: radial-gradient(
+      var(--spec-r, 260px) circle at var(--mx, 50%) var(--my, 0%),
+      oklch(1 0 0 / 0.1),
+      oklch(1 0 0 / 0.03) 40%,
+      transparent 70%
+    );
+  }
+
+  /* Green rim, only for the success state. */
+  .glass[data-state="pass"] {
+    box-shadow:
+      inset 0 0 0 1px oklch(0.8 0.18 152 / 0.45),
+      0 2px 4px oklch(0 0 0 / 0.35),
+      0 40px 80px -24px oklch(0 0 0 / 0.75);
+  }
+
+  /* SVG refraction, hero tier only, Chromium only (set on <html> by GlassFilters). */
+  html[data-refract] .glass[data-glass="hero"][data-refract] {
+    -webkit-backdrop-filter: url(#glass-refract) blur(var(--glass-blur))
+      saturate(var(--glass-sat));
+    backdrop-filter: url(#glass-refract) blur(var(--glass-blur))
+      saturate(var(--glass-sat));
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    .glass {
+      background-color: var(--color-ink-850);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass,
+    .glass[data-glass] {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      background-color: var(--color-ink-850);
+    }
+    .glass::after {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glass::after {
+      display: none;
+    }
+  }
+}
+
+/* ---------- Hero ---------- */
+
+@layer components {
+  /* The card lifts into the headline's last line on wide screens. */
+  @media (min-width: 64rem) {
+    .hero-card-slot {
+      margin-top: calc(var(--text-overlap, 5.25rem) * -1);
+    }
+  }
+
+  .hero-light {
+    --light-x: 50%;
+    --light-y: 78%;
+  }
+
+  @media (min-width: 64rem) {
+    .hero-light {
+      --light-x: 72%;
+      --light-y: 62%;
+    }
+  }
+
+  /* Fade the whole light out before the section edge: no hard cut-off. */
+  .hero-light {
+    -webkit-mask: linear-gradient(to bottom, #000 72%, transparent);
+    mask: linear-gradient(to bottom, #000 72%, transparent);
+  }
+
+  /* PR timeline rail: a 1px line the page hangs on; sections are events on it. */
+  .pr-rail {
+    position: absolute;
+    left: 1.75rem;
+    top: 1.1rem;
+    bottom: -7rem;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      var(--color-ink-700),
+      var(--color-ink-700) 80%,
+      oklch(0.372 0.044 257 / 0.6)
+    );
+  }
+
+  .pr-rail__node {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    translate: -50% -50%;
+    border-radius: 999px;
+    background: var(--color-ink-950);
+    color: var(--color-brand-400);
+    box-shadow: inset 0 0 0 1px var(--color-ink-700);
+  }
+
+  .hero-light > div {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Cool ambient from the top-left so the ground has depth, not flat black. */
+  .hero-light__ambient {
+    background: radial-gradient(
+      70% 55% at 18% 8%,
+      oklch(0.3 0.05 262 / 0.55),
+      transparent 70%
+    );
+  }
+
+  /* The lift: a soft column of light rising from below the card. */
+  .hero-light__shaft {
+    background: linear-gradient(
+      to top,
+      oklch(0.72 0.19 150 / 0.22),
+      oklch(0.72 0.19 150 / 0.06) 45%,
+      transparent 75%
+    );
+    -webkit-mask: radial-gradient(
+      28% 70% at var(--light-x) 100%,
+      #000 0%,
+      transparent 100%
+    );
+    mask: radial-gradient(
+      28% 70% at var(--light-x) 100%,
+      #000 0%,
+      transparent 100%
+    );
+  }
+
+  .hero-light__core {
+    background:
+      radial-gradient(
+        26% 30% at var(--light-x) var(--light-y),
+        oklch(0.8 0.18 152 / 0.11),
+        transparent 70%
+      ),
+      radial-gradient(
+        48% 46% at var(--light-x) var(--light-y),
+        oklch(0.6 0.15 150 / 0.09),
+        transparent 75%
+      );
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-light__core,
+      .hero-light__shaft {
+        animation: hero-light-drift linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 90vh;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-card {
+      animation: lift-in 1100ms var(--ease-lift) 120ms both;
+    }
+  }
+}
+
+@keyframes hero-light-drift {
+  to {
+    translate: 0 -12%;
+    scale: 1.08;
+    opacity: 0.55;
+  }
+}
+
+@keyframes lift-in {
+  from {
+    translate: 0 48px;
+    opacity: 0;
+  }
+}
+
+@utility loop-progress {
+  transform-origin: left;
+  animation-name: loop-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes loop-progress {
+  from {
+    scale: 0 1;
+  }
+}
+
+/* ---------- Sections on the PR rail ---------- */
+
+@layer components {
+  .rail-section {
+    --py: 6rem;
+    padding-block: var(--py);
+  }
+
+  @media (min-width: 64rem) {
+    .rail-section {
+      --py: 8rem;
+    }
+  }
+
+  .rail-section__line {
+    position: absolute;
+    left: 1.75rem;
+    top: calc(var(--py) * -1);
+    bottom: calc(var(--py) * -1);
+    width: 1px;
+    background: var(--color-ink-700);
+  }
+
+  .rail-section__anchor {
+    position: absolute;
+    left: 1.75rem;
+    top: 1.55rem;
+    width: 1px;
+  }
+
+  .rail-section__anchor .pr-rail__node {
+    color: var(--color-fg-muted);
+  }
+
+  .rail-section__anchor[data-tone="fail"] .pr-rail__node {
+    color: var(--color-error);
+    box-shadow: inset 0 0 0 1px oklch(0.7 0.19 23 / 0.6);
+  }
+
+  .rail-section__anchor[data-tone="pass"] .pr-rail__node {
+    color: var(--color-brand-400);
+    box-shadow: inset 0 0 0 1px oklch(0.8 0.18 152 / 0.55);
+  }
+
+  /* The event, written down the rail beside its node. */
+  .rail-section__event {
+    position: absolute;
+    top: 1.5rem;
+    left: 0.75rem;
+    writing-mode: vertical-rl;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--color-fg-subtle);
+  }
+
+  .rail-section__anchor[data-tone="fail"] .rail-section__event {
+    color: oklch(0.7 0.19 23 / 0.85);
+  }
+
+  .rail-section__anchor[data-tone="pass"] .rail-section__event,
+  .rail-section__anchor[data-tone="merged"] .rail-section__event {
+    color: var(--color-brand-300);
+  }
+
+  .rail-section__anchor[data-tone="merged"] .pr-rail__node {
+    color: var(--color-ink-1000);
+    background: var(--color-brand-400);
+    box-shadow: none;
+  }
+
+  /* The rail ends at the merge event. */
+  .rail-section[data-last] .rail-section__line {
+    bottom: auto;
+    height: calc(var(--py) + 1.55rem);
+  }
+
+  /* Shiki output: keep its colours, own the box. */
+  .code-block pre:focus-visible {
+    outline-offset: -3px;
+  }
+
+  .code-block pre {
+    margin: 0;
+    padding: 1.25rem 0;
+    overflow-x: auto;
+    background: transparent !important;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    counter-reset: line;
+    tab-size: 2;
+  }
+
+  .code-block code {
+    display: grid;
+    min-width: max-content;
+  }
+
+  .code-block .line {
+    padding-right: 1.25rem;
+  }
+
+  @media (max-width: 40rem) {
+    .code-block pre {
+      font-size: 0.75rem;
+    }
+    .code-block .line {
+      padding-right: 0.5rem !important;
+    }
+    .code-block .line::before {
+      width: 2rem !important;
+      padding-right: 0.75rem !important;
+    }
+  }
+
+  .code-block .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 3rem;
+    padding-right: 1.25rem;
+    text-align: right;
+    color: var(--color-fg-subtle);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+
+  /* Native disclosure: chevron rotates, no marker. */
+  .faq-item summary {
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item[open] .faq-chevron {
+    rotate: 180deg;
+  }
+
+  /* Range input in the score section. */
+  .score-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2rem;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .score-range::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--color-error) var(--fill),
+      var(--color-ink-700) var(--fill)
+    );
+  }
+
+  .score-range::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--color-error) var(--fill),
+      var(--color-ink-700) var(--fill)
+    );
+  }
+
+  .score-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: -0.5rem;
+    border-radius: 999px;
+    background: var(--color-fg);
+    box-shadow:
+      0 0 0 4px var(--color-ink-900),
+      0 2px 6px oklch(0 0 0 / 0.5);
+  }
+
+  .score-range::-moz-range-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--color-fg);
+    box-shadow:
+      0 0 0 4px var(--color-ink-900),
+      0 2px 6px oklch(0 0 0 / 0.5);
+  }
+}
+
+/* Merge moment: the same column of light the hero lifts on, smaller. */
+.final-cta__light {
+  position: absolute;
+  inset: auto 0 calc(var(--py) * -1) 0;
+  height: 85%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    oklch(0.72 0.19 150 / 0.16),
+    oklch(0.72 0.19 150 / 0.04) 50%,
+    transparent 80%
+  );
+  -webkit-mask: radial-gradient(34% 80% at 30% 100%, #000, transparent);
+  mask: radial-gradient(34% 80% at 30% 100%, #000, transparent);
+}
+
+/* ---------- Motion: the review is traced as you read ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .rail-section {
+      view-timeline: --section block;
+    }
+
+    /* The rail fills as the section scrolls past: grey for neutral events,
+       red where the review fails, green once checks pass. */
+    .rail-section__line::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform-origin: top;
+      background: oklch(0.66 0.026 257 / 0.75);
+      animation: rail-trace linear both;
+      animation-timeline: --section;
+      animation-range: entry 20% exit 40%;
+    }
+
+    .rail-section[data-tone="fail"] .rail-section__line::after {
+      background: oklch(0.7 0.19 23 / 0.75);
+    }
+
+    .rail-section[data-tone="pass"] .rail-section__line::after,
+    .rail-section[data-tone="merged"] .rail-section__line::after {
+      background: oklch(0.8 0.18 152 / 0.7);
+    }
+
+    .rail-section > div > header {
+      animation: lift-in-view linear both;
+      animation-timeline: --section;
+      animation-range: entry 0% entry 45%;
+    }
+
+    .rail-section__anchor .pr-rail__node {
+      animation: node-in linear both;
+      animation-timeline: --section;
+      animation-range: entry 15% entry 40%;
+    }
+  }
+}
+
+@keyframes rail-trace {
+  from {
+    scale: 1 0;
+  }
+}
+
+@keyframes lift-in-view {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+
+@keyframes node-in {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+}
+
+/* PR card beats (CSS, so the hero ships without an animation library). */
+@media (prefers-reduced-motion: no-preference) {
+  .pr-row-in {
+    animation: pr-row-in 450ms var(--ease-lift) both;
+  }
+
+  .pr-cursor {
+    animation: pr-cursor-approach 1s var(--ease-lift) 1.2s both;
+  }
+
+  .pr-cursor[data-committed] {
+    animation: pr-cursor-tap 1s var(--ease-lift) both;
+  }
+}
+
+@keyframes pr-row-in {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+
+@keyframes pr-cursor-approach {
+  from {
+    opacity: 0;
+    translate: 52px 38px;
+  }
+  to {
+    opacity: 1;
+    translate: 6px 2px;
+  }
+}
+
+@keyframes pr-cursor-tap {
+  0% {
+    opacity: 1;
+    translate: 6px 2px;
+    scale: 1;
+  }
+  30% {
+    opacity: 1;
+    scale: 0.82;
+  }
+  100% {
+    opacity: 0;
+    translate: 6px 2px;
+    scale: 1;
+  }
+}
+
+/* Lenis (smooth scrolling): its own CSS, plus native smooth anchors off while it runs. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis textarea,
+.lenis pre {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

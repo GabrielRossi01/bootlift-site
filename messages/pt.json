@@ -1,0 +1,394 @@
+{
+  "meta": {
+    "title": "Bootlift: verificação de prontidão para o Spring Boot 4 em pull requests",
+    "description": "GitHub Action open-source que mede a prontidão para o Spring Boot 4, barra nova dívida de migração nos pull requests e sugere correções em 1 clique. Sem JDK, sem compilar."
+  },
+  "a11y": {
+    "skip": "Pular para o conteúdo",
+    "home": "Página inicial do Bootlift"
+  },
+  "nav": {
+    "label": "Principal",
+    "howItWorks": "Como funciona",
+    "playground": "Playground",
+    "rules": "Regras",
+    "docs": "Docs",
+    "contribute": "Contribua",
+    "github": "GitHub",
+    "githubStars": "Dar estrela ao Bootlift no GitHub, {count, plural, one {# estrela} other {# estrelas}}",
+    "githubNoCount": "Bootlift no GitHub",
+    "marketplace": "Marketplace",
+    "menuOpen": "Abrir menu",
+    "menuClose": "Fechar menu"
+  },
+  "locale": {
+    "label": "Idioma",
+    "en": "English",
+    "pt": "Português"
+  },
+  "hero": {
+    "title": "Migre para o Spring Boot 4 sem dívida de migração.",
+    "subtitle": "O Bootlift mede a prontidão para o Spring Boot 4 em cada pull request, reprova só pelas linhas que você adiciona e transforma correções em sugestões de 1 clique. Em segundos, sem JDK e sem compilar.",
+    "ctaPrimary": "Adicionar ao seu workflow",
+    "ctaSecondary": "Testar no playground",
+    "usesWhat": "o passo do workflow",
+    "meta": "Grátis e open source · MIT · {version}"
+  },
+  "copy": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyLabel": "Copiar {what}"
+  },
+  "footer": {
+    "tagline": "Prontidão para o Spring Boot 4, verificada em cada pull request.",
+    "product": "Produto",
+    "project": "Projeto",
+    "marketplace": "GitHub Marketplace",
+    "github": "Código no GitHub",
+    "license": "Licença MIT",
+    "contributing": "Guia de contribuição",
+    "madeBy": "Feito por",
+    "portfolio": "Portfólio",
+    "linkedin": "LinkedIn",
+    "version": "Versão atual {version}"
+  },
+  "prCard": {
+    "label": "Animação do pull request de demonstração do Bootlift. Código antigo enviado ao PR derruba o score de prontidão para o Spring Boot 4 de 94 para 60 e o check reprova. O Bootlift sugere trocar javax.servlet por jakarta.servlet; ao commitar a sugestão, o score volta a 94 e o check passa.",
+    "title": "feat: loga o tempo de cada requisição",
+    "readiness": "Prontidão para o Spring Boot 4",
+    "onMain": "na main",
+    "inPr": "neste PR",
+    "passing": "Aprovado",
+    "failing": "Reprovado",
+    "ruleMessage": "O Spring Boot 4 usa Jakarta EE 11 (jakarta.*)",
+    "commit": "Commit suggestion",
+    "committed": "Commit feito",
+    "pause": "Pausar animação",
+    "play": "Retomar animação",
+    "changes": "Alterações",
+    "footerMain": "Branch base, antes do PR",
+    "footerPass": "{n} de {total} sugestões commitadas",
+    "blocks": "Bloqueia o merge",
+    "noDebt": "Sem dívida nova",
+    "wasScore": "antes {score}",
+    "suggestedOf": "Alteração sugerida · {n} de {total}",
+    "emptyMain": "Nenhuma alteração na main ainda"
+  },
+  "whyNow": {
+    "title": "O Spring Boot 4 mexe no chão do seu código.",
+    "intro": "O Boot 4 adota Jakarta EE 11 e Jackson 3, remove o @MockBean e renomeia 96 propriedades de configuração. O Bootlift encontra cada uma delas antes da atualização.",
+    "changesLabel": "O que muda no Boot 4",
+    "changes": {
+      "jakarta": "Jakarta EE 11",
+      "jackson": "Jackson 3",
+      "testing": "Testes",
+      "config": "Configuração"
+    },
+    "statsLabel": "O Bootlift em números",
+    "stats": {
+      "rules": "regras",
+      "properties": "propriedades renomeadas",
+      "config": "configuração",
+      "seconds": "Segundos",
+      "secondsLabel": "por análise"
+    }
+  },
+  "how": {
+    "title": "Três etapas, em cada pull request.",
+    "intro": "O Bootlift roda como um passo do seu workflow. Nada para instalar no runner, nada para configurar.",
+    "scan": {
+      "title": "Scan",
+      "body": "Lê arquivos de build, configuração e código Java ou Kotlin como texto. Nada é compilado e nenhum JDK é instalado."
+    },
+    "score": {
+      "title": "Score",
+      "body": "Cada achado pesa num score de prontidão de 0 a 100. Você recebe um comentário no PR, atualizado a cada push, além do job summary e de anotações nas linhas."
+    },
+    "guard": {
+      "title": "Guardrail e sugestões",
+      "body": "Em pull requests, só as linhas adicionadas podem reprovar o job. O legado conta no score, mas não trava ninguém. Correções com resposta certa chegam como sugestões de 1 clique."
+    },
+    "legacy": "Linha que já existia",
+    "legacyNote": "Conta no score. Nunca bloqueia.",
+    "added": "Adicionada neste PR",
+    "addedNote": "Pode reprovar o job. Vem com sugestão.",
+    "reads": "Lê",
+    "noJdk": "Sem JDK · sem compilar",
+    "outComment": "Comentário no PR",
+    "outSummary": "Job summary",
+    "outAnnotations": "Anotações nas linhas",
+    "suggestion": "Alteração sugerida",
+    "commit": "Commit suggestion"
+  },
+  "demo": {
+    "title": "Veja num pull request de verdade.",
+    "intro": "O bootlift-demo tem score 94 na main. Um pull request com código antigo derruba para 60 e reprova com 6 sugestões. Aplicadas as sugestões, ele volta a 94, verde.",
+    "openPrs": "Abrir os pull requests da demo",
+    "full": "Ver o passo a passo completo (75 s)",
+    "short": "Voltar para a demo curta",
+    "videoLabel": "Gravação de tela do pull request do bootlift-demo: as sugestões do Bootlift são commitadas e o pull request volta a 94 de 100.",
+    "fullLabel": "Passo a passo completo do pull request do bootlift-demo, do check reprovado ao aprovado.",
+    "play": "Reproduzir demo",
+    "pause": "Pausar demo",
+    "toQuickstart": "Adicionar ao seu workflow"
+  },
+  "rules": {
+    "title": "12 regras, cada uma com uma saída.",
+    "intro": "Verificadas no código, nos arquivos de build e na configuração. Quatro delas se corrigem com 1 clique.",
+    "filterLabel": "Filtrar regras por severidade",
+    "filters": {
+      "all": "Todas",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "count": "{count, plural, one {# regra} other {# regras}}",
+    "oneClick": "Correção em 1 clique",
+    "scopes": {
+      "java": "Código",
+      "build": "Build",
+      "config": "Config"
+    },
+    "before": "Antes",
+    "after": "Depois",
+    "items": {
+      "BOOT_VERSION": "Spring Boot abaixo de 3.5 (warning), ou no 3.5.x e pronto para o 4.0 (info).",
+      "JAVA_BASELINE": "Java abaixo de 17. O Boot 4 exige 17 ou mais recente.",
+      "GRADLE_VERSION": "Gradle Wrapper abaixo de 8.14, o mínimo do plugin do Boot 4.",
+      "JAKARTA_NAMESPACE": "Imports da Jakarta EE ainda em javax.*, como servlet e persistence.",
+      "JACKSON3_NAMESPACE": "Pacotes do Jackson 2. O Boot 4 usa o Jackson 3 (tools.jackson); as anotações continuam onde estão.",
+      "MOCKBEAN_REMOVED": "@MockBean e @SpyBean foram removidos em favor de @MockitoBean e @MockitoSpyBean.",
+      "UNDERTOW_REMOVED": "O Undertow foi removido: ainda não é compatível com o Servlet 6.1.",
+      "SPOCK_REMOVED": "A integração com o Spock saiu do Boot 4.0. O time do Spring anunciou a volta no 4.1.",
+      "SESSION_REMOVED": "O Boot não configura mais o Spring Session para MongoDB nem Hazelcast.",
+      "STARTER_RENAMED": "Starters renomeados: web → webmvc, aop → aspectj, oauth2-* → security-oauth2-* e outros.",
+      "LAUNCH_SCRIPT": "O launch script de jars executáveis foi removido.",
+      "PROPERTY_RENAMED": "96 propriedades renomeadas em application.*, YAML e .properties."
+    },
+    "afterNotes": {
+      "BOOT_VERSION": "depois 4.0.x",
+      "SPOCK_REMOVED": "JUnit 5, ou Boot 4.1",
+      "SESSION_REMOVED": "Redis ou JDBC, ou o módulo do próprio projeto"
+    }
+  },
+  "quickstart": {
+    "title": "Adicione em um passo.",
+    "intro": "Salve este workflow no seu repositório, por exemplo em .github/workflows/bootlift.yml. O próximo pull request já recebe score, relatório e sugestões.",
+    "copyWhat": "o workflow",
+    "inputs": "Inputs",
+    "outputs": "Outputs",
+    "permissions": "Permissões",
+    "colName": "Nome",
+    "colDefault": "Padrão",
+    "colDescription": "O que faz",
+    "defaultEmpty": "vazio",
+    "inputDesc": {
+      "path": "Raiz do projeto a analisar.",
+      "mode": "guardrail ou full. Vazio = guardrail em pull_request e full nos demais eventos.",
+      "fail-on": "Severidade mínima que reprova o job: none, warning ou error.",
+      "comment-on-pr": "Publica ou atualiza o comentário com o relatório no PR.",
+      "suggestions": "No guardrail, publica cada correção determinística como sugestão de 1 clique.",
+      "github-token": "Token para ler o diff do PR e comentar. Em PRs de fork ele é somente leitura e a action só avisa."
+    },
+    "outputDesc": {
+      "score": "Nota de prontidão de 0 a 100 para o repositório inteiro.",
+      "blocking": "Achados que podem reprovar o job no modo atual.",
+      "errors": "Achados de severidade error no repositório inteiro."
+    },
+    "permDesc": {
+      "contents": "Ler o código do repositório. O actions/checkout já pede.",
+      "pr": "Ler o diff do PR, comentar e publicar as sugestões. Sem ela, o relatório ainda vai para o job summary."
+    },
+    "versionsTitle": "@v1 ou @v1.0.1?",
+    "v1": "Acompanha todas as versões 1.x: correções e regras novas chegam sozinhas.",
+    "vExact": "Fixa esta versão exata. Você atualiza manualmente."
+  },
+  "score": {
+    "title": "Como o score é calculado.",
+    "intro": "Começa em 100. Cada regra encontrada desconta uma vez o peso da severidade, mais 1 por ocorrência extra, até 10 a mais por regra. Nunca fica abaixo de 0.",
+    "weights": "Peso por regra",
+    "extra": "Cada ocorrência extra",
+    "extraValue": "+1",
+    "cap": "Teto por regra",
+    "capValue": "+10",
+    "tryLabel": "Ocorrências de JAKARTA_NAMESPACE",
+    "resultLabel": "Desconto desta regra",
+    "scoreLabel": "Score",
+    "note": "Trinta imports javax pesam como um problema grande, não como trinta."
+  },
+  "contribute": {
+    "title": "Open source. Traga uma regra.",
+    "intro": "O Bootlift tem licença MIT e é feito em público. Escolha a porta que combina com o que você encontrou.",
+    "paths": {
+      "falsePositive": {
+        "title": "Relatar falso positivo",
+        "body": "Algo marcado que não deveria? Mande o arquivo e a linha."
+      },
+      "newRule": {
+        "title": "Sugerir uma regra",
+        "body": "Uma mudança do Boot 4 que o Bootlift ainda não pega."
+      },
+      "docs": {
+        "title": "Melhorar a documentação",
+        "body": "O guia de contribuição tem o setup e as convenções."
+      },
+      "code": {
+        "title": "Mandar código",
+        "body": "Comece por uma issue marcada como good first issue."
+      }
+    },
+    "stepsTitle": "Do fork ao pull request",
+    "steps": {
+      "fork": "Faça o fork do repositório",
+      "test": "Instale e rode os testes",
+      "rule": "Escreva a regra e o teste",
+      "pr": "Gere o bundle e abra o pull request"
+    }
+  },
+  "faq": {
+    "title": "Perguntas antes de adicionar.",
+    "items": {
+      "fork": {
+        "q": "Funciona em pull requests vindos de fork?",
+        "a": "O relatório funciona: score, job summary, anotações e fail-on. As sugestões de 1 clique não, porque o token em PRs de fork é somente leitura."
+      },
+      "noise": {
+        "q": "Ele enche um repositório legado de comentários?",
+        "a": "Não. Ele mantém um comentário só, atualizado a cada push. No modo guardrail os achados do legado aparecem recolhidos nesse comentário e só contam no score; as sugestões vão apenas nas linhas adicionadas, no máximo 20 por review."
+      },
+      "monorepo": {
+        "q": "E num monorepo?",
+        "a": "Aponte o path para um serviço e rode a action uma vez por serviço, por exemplo com strategy.matrix."
+      },
+      "falsePositive": {
+        "q": "Achei um falso positivo. E agora?",
+        "a": "Abra o formulário de falso positivo com o arquivo e a linha. A análise é feita linha a linha, então um import ou uma anotação quebrados em várias linhas também podem escapar."
+      },
+      "jdk": {
+        "q": "Preciso de JDK ou de build?",
+        "a": "Não. O Bootlift lê os arquivos como texto, então roda em segundos sem instalar Java nem compilar nada."
+      },
+      "cost": {
+        "q": "Quanto custa?",
+        "a": "Nada. É grátis e open source, com licença MIT."
+      }
+    },
+    "formLink": "Abrir o formulário de falso positivo"
+  },
+  "finalCta": {
+    "title": "Faça o merge do próximo PR sem dívida nova de migração.",
+    "body": "Um passo no seu workflow. Todo pull request depois dele é verificado contra o Spring Boot 4.",
+    "primary": "Instalar pelo Marketplace",
+    "secondary": "Dar estrela no GitHub",
+    "checksTitle": "Todos os checks passaram",
+    "checkScore": "Bootlift · prontidão para o Spring Boot 4",
+    "checkSuggestions": "6 de 6 sugestões commitadas",
+    "checkDebt": "Nenhuma dívida nova de migração"
+  },
+  "rail": {
+    "whyNow": "a base mudou para o Spring Boot 4",
+    "how": "bootlift iniciou um check",
+    "demo": "pediu alterações · 94 → 60",
+    "rules": "revisou com 12 regras",
+    "quickstart": "todos os checks passaram",
+    "score": "score 94/100",
+    "contribute": "aberto a contribuições",
+    "faq": "conversa",
+    "final": "pronto para o merge",
+    "playground": "rodou os checks no seu navegador"
+  },
+  "playground": {
+    "title": "Cole um arquivo. Veja o que o Boot 4 quebra.",
+    "intro": "O mesmo motor de regras que a action roda, embutido nesta página. Escolha um exemplo dos próprios testes da action ou cole seu pom.xml, build do Gradle, arquivo application ou classe Java.",
+    "examplesLabel": "Exemplos",
+    "fileName": "Nome do arquivo",
+    "editorLabel": "Conteúdo do arquivo",
+    "privacy": "Seu código não sai do navegador.",
+    "unsupported": "O Bootlift não lê {name}. Use pom.xml, build.gradle(.kts), gradle.properties, um *.versions.toml, gradle-wrapper.properties, application*.yml ou .properties, ou um arquivo .java ou .kt.",
+    "readsAs": "Lido como {scope}",
+    "reset": "Restaurar exemplo",
+    "score": "Prontidão",
+    "detected": "Detectado",
+    "boot": "Spring Boot",
+    "java": "Java",
+    "gradle": "Gradle",
+    "buildTool": "Ferramenta de build",
+    "none": "não encontrado",
+    "counts": "{errors, plural, =0 {0 errors} one {# error} other {# errors}} · {warnings, plural, =0 {0 warnings} one {# warning} other {# warnings}} · {info} info",
+    "findings": "Achados",
+    "line": "linha {n}",
+    "goToLine": "Ir para a linha {n} no editor",
+    "fix": "Correção",
+    "suggestion": "Alteração sugerida",
+    "empty": "Nenhum achado de Spring Boot 4 neste arquivo.",
+    "emptyEditor": "Cole um arquivo para analisar.",
+    "guardFail": "Bloqueia um PR se estas linhas forem novas",
+    "guardPass": "Passa num PR mesmo como linhas novas",
+    "guardNote": "Se já está na main, isso só baixa o score. Num pull request, só as linhas que você adiciona podem reprovar o job (fail-on: error).",
+    "sniffHint": "Isto parece um {name}.",
+    "sniffAction": "Ler como {name}",
+    "emptyName": "Dê um nome ao arquivo para o Bootlift saber como lê-lo.",
+    "apply": "Aplicar sugestão",
+    "applyAll": "Aplicar as {n}",
+    "before": "Antes",
+    "after": "Depois",
+    "exit": "Isso foi um arquivo. No CI, o Bootlift lê o projeto inteiro em cada pull request.",
+    "exitLink": "Adicionar ao seu workflow",
+    "status": "Score {score}. {verdict}. {counts}"
+  },
+  "engine": {
+    "BOOT_VERSION_warning": {
+      "message": "Spring Boot {version}: the recommended path goes through the latest 3.5.x before 4.0",
+      "fix": "Move to the latest 3.5.x, clear the deprecations, then go to 4.0"
+    },
+    "BOOT_VERSION_info": {
+      "message": "Spring Boot {version}: ready to start the migration to 4.0",
+      "fix": "Resolve the other findings and update to 4.0.x"
+    },
+    "JAVA_BASELINE": {
+      "message": "Java {version}: Spring Boot 4 requires Java 17 or newer",
+      "fix": "Use Java 17+ (recommended: the latest LTS)"
+    },
+    "GRADLE_VERSION": {
+      "message": "Gradle {version}: the Spring Boot 4 plugin requires Gradle 8.14 or newer",
+      "fix": "Run ./gradlew wrapper --gradle-version 8.14.3 (or a 9.x)"
+    },
+    "JAKARTA_NAMESPACE": {
+      "message": "Jakarta EE javax.* package: Spring Boot 4 uses Jakarta EE 11 (jakarta.*)",
+      "fix": "Replace javax. with jakarta. in the import"
+    },
+    "JACKSON3_NAMESPACE": {
+      "message": "Jackson 2: Spring Boot 4 uses Jackson 3, in the tools.jackson package",
+      "fix": "Use tools.jackson.* and review renamed classes (e.g. JsonProcessingException → JacksonException). Annotations stay in com.fasterxml.jackson.annotation"
+    },
+    "MOCKBEAN_REMOVED": {
+      "message": "{annotation} was removed in Spring Boot 4",
+      "fixImport": "Import {target}",
+      "fixUse": "Use {target}"
+    },
+    "UNDERTOW_REMOVED": {
+      "message": "Undertow was removed: it is not yet compatible with Servlet 6.1",
+      "fix": "Use Tomcat (the default) or Jetty (spring-boot-starter-jetty)"
+    },
+    "SPOCK_REMOVED": {
+      "message": "The Spock integration left Spring Boot 4.0 (Spock does not support Groovy 5 yet)",
+      "fix": "Move these tests to JUnit 5, or target Spring Boot 4.1, where the Spring team announced the integration's return"
+    },
+    "SESSION_REMOVED": {
+      "message": "Spring Boot 4 no longer configures Spring Session MongoDB/Hazelcast (the projects moved to the MongoDB and Hazelcast teams)",
+      "fix": "Follow the session project's own documentation, with an explicit version, or move to Redis/JDBC"
+    },
+    "STARTER_RENAMED": {
+      "message": "{from} was renamed in Spring Boot 4",
+      "fix": "Use {to}"
+    },
+    "LAUNCH_SCRIPT": {
+      "message": "The executable jar launch script was removed in Spring Boot 4",
+      "fix": "Run it with java -jar, or use Gradle's application plugin or a systemd service"
+    },
+    "PROPERTY_RENAMED": {
+      "message": "The property {key} was renamed in Spring Boot 4",
+      "fix": "Use {to}"
+    }
+  }
+}
