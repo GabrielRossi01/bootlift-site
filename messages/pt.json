@@ -294,6 +294,101 @@
     "score": "score 94/100",
     "contribute": "aberto a contribuições",
     "faq": "conversa",
-    "final": "pronto para o merge"
+    "final": "pronto para o merge",
+    "playground": "rodou os checks no seu navegador"
+  },
+  "playground": {
+    "title": "Cole um arquivo. Veja o que o Boot 4 quebra.",
+    "intro": "O mesmo motor de regras que a action roda, embutido nesta página. Escolha um exemplo dos próprios testes da action ou cole seu pom.xml, build do Gradle, arquivo application ou classe Java.",
+    "examplesLabel": "Exemplos",
+    "fileName": "Nome do arquivo",
+    "editorLabel": "Conteúdo do arquivo",
+    "privacy": "Seu código não sai do navegador.",
+    "unsupported": "O Bootlift não lê {name}. Use pom.xml, build.gradle(.kts), gradle.properties, um *.versions.toml, gradle-wrapper.properties, application*.yml ou .properties, ou um arquivo .java ou .kt.",
+    "readsAs": "Lido como {scope}",
+    "reset": "Restaurar exemplo",
+    "score": "Prontidão",
+    "detected": "Detectado",
+    "boot": "Spring Boot",
+    "java": "Java",
+    "gradle": "Gradle",
+    "buildTool": "Ferramenta de build",
+    "none": "não encontrado",
+    "counts": "{errors, plural, =0 {0 errors} one {# error} other {# errors}} · {warnings, plural, =0 {0 warnings} one {# warning} other {# warnings}} · {info} info",
+    "findings": "Achados",
+    "line": "linha {n}",
+    "goToLine": "Ir para a linha {n} no editor",
+    "fix": "Correção",
+    "suggestion": "Alteração sugerida",
+    "empty": "Nenhum achado de Spring Boot 4 neste arquivo.",
+    "emptyEditor": "Cole um arquivo para analisar.",
+    "guardFail": "Bloqueia um PR se estas linhas forem novas",
+    "guardPass": "Passa num PR mesmo como linhas novas",
+    "guardNote": "Se já está na main, isso só baixa o score. Num pull request, só as linhas que você adiciona podem reprovar o job (fail-on: error).",
+    "sniffHint": "Isto parece um {name}.",
+    "sniffAction": "Ler como {name}",
+    "emptyName": "Dê um nome ao arquivo para o Bootlift saber como lê-lo.",
+    "apply": "Aplicar sugestão",
+    "applyAll": "Aplicar as {n}",
+    "before": "Antes",
+    "after": "Depois",
+    "exit": "Isso foi um arquivo. No CI, o Bootlift lê o projeto inteiro em cada pull request.",
+    "exitLink": "Adicionar ao seu workflow",
+    "status": "Score {score}. {verdict}. {counts}"
+  },
+  "engine": {
+    "BOOT_VERSION_warning": {
+      "message": "Spring Boot {version}: the recommended path goes through the latest 3.5.x before 4.0",
+      "fix": "Move to the latest 3.5.x, clear the deprecations, then go to 4.0"
+    },
+    "BOOT_VERSION_info": {
+      "message": "Spring Boot {version}: ready to start the migration to 4.0",
+      "fix": "Resolve the other findings and update to 4.0.x"
+    },
+    "JAVA_BASELINE": {
+      "message": "Java {version}: Spring Boot 4 requires Java 17 or newer",
+      "fix": "Use Java 17+ (recommended: the latest LTS)"
+    },
+    "GRADLE_VERSION": {
+      "message": "Gradle {version}: the Spring Boot 4 plugin requires Gradle 8.14 or newer",
+      "fix": "Run ./gradlew wrapper --gradle-version 8.14.3 (or a 9.x)"
+    },
+    "JAKARTA_NAMESPACE": {
+      "message": "Jakarta EE javax.* package: Spring Boot 4 uses Jakarta EE 11 (jakarta.*)",
+      "fix": "Replace javax. with jakarta. in the import"
+    },
+    "JACKSON3_NAMESPACE": {
+      "message": "Jackson 2: Spring Boot 4 uses Jackson 3, in the tools.jackson package",
+      "fix": "Use tools.jackson.* and review renamed classes (e.g. JsonProcessingException → JacksonException). Annotations stay in com.fasterxml.jackson.annotation"
+    },
+    "MOCKBEAN_REMOVED": {
+      "message": "{annotation} was removed in Spring Boot 4",
+      "fixImport": "Import {target}",
+      "fixUse": "Use {target}"
+    },
+    "UNDERTOW_REMOVED": {
+      "message": "Undertow was removed: it is not yet compatible with Servlet 6.1",
+      "fix": "Use Tomcat (the default) or Jetty (spring-boot-starter-jetty)"
+    },
+    "SPOCK_REMOVED": {
+      "message": "The Spock integration left Spring Boot 4.0 (Spock does not support Groovy 5 yet)",
+      "fix": "Move these tests to JUnit 5, or target Spring Boot 4.1, where the Spring team announced the integration's return"
+    },
+    "SESSION_REMOVED": {
+      "message": "Spring Boot 4 no longer configures Spring Session MongoDB/Hazelcast (the projects moved to the MongoDB and Hazelcast teams)",
+      "fix": "Follow the session project's own documentation, with an explicit version, or move to Redis/JDBC"
+    },
+    "STARTER_RENAMED": {
+      "message": "{from} was renamed in Spring Boot 4",
+      "fix": "Use {to}"
+    },
+    "LAUNCH_SCRIPT": {
+      "message": "The executable jar launch script was removed in Spring Boot 4",
+      "fix": "Run it with java -jar, or use Gradle's application plugin or a systemd service"
+    },
+    "PROPERTY_RENAMED": {
+      "message": "The property {key} was renamed in Spring Boot 4",
+      "fix": "Use {to}"
+    }
   }
 }

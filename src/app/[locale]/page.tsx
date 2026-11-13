@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/hero/Hero";
 import { WhyNow } from "@/components/sections/WhyNow";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Demo } from "@/components/sections/Demo";
+import { Playground } from "@/components/sections/Playground";
 import { Rules } from "@/components/sections/Rules";
 import { Quickstart } from "@/components/sections/Quickstart";
 import { Score } from "@/components/sections/Score";
@@ -16,7 +17,7 @@ export default function Home() {
       <WhyNow />
       <HowItWorks />
       <Demo />
-      {/* Playground (#playground) lands here in phase 4. */}
+      <Playground />
       <Rules />
       <Quickstart />
       <Score />

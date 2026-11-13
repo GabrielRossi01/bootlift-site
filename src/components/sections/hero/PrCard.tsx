@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   animate,
@@ -24,6 +18,7 @@ import {
   Play,
 } from "lucide-react";
 import { GlassSurface } from "@/components/glass/GlassSurface";
+import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * The demo story, from bootlift-demo PR #1:
@@ -55,25 +50,6 @@ const isFailing = (phase: Phase) =>
   phase === "drop" || phase === "suggest" || phase === "commit";
 const showsSuggestion = (phase: Phase) =>
   phase === "suggest" || phase === "commit";
-
-const REDUCED = "(prefers-reduced-motion: reduce)";
-const subscribe = (onChange: () => void) => {
-  const media = window.matchMedia(REDUCED);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
-};
-
-/**
- * Same answer on the server and during hydration (motion on), then the real
- * preference: avoids the text mismatch a client-only read would cause.
- */
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    subscribe,
-    () => window.matchMedia(REDUCED).matches,
-    () => false,
-  );
-}
 
 type T = (key: string, values?: Record<string, string | number>) => string;
 

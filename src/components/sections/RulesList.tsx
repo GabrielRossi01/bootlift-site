@@ -66,6 +66,7 @@ export function RulesList() {
         {shown.map((rule) => (
           <li
             key={rule.id}
+            id={`rule-${rule.id}`}
             className="flex flex-col gap-5 bg-ink-900 px-5 py-6 sm:px-6 lg:odd:last:col-span-2"
           >
             <div className="min-w-0">
