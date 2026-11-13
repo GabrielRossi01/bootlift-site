@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Bootlift: verificação de prontidão para o Spring Boot 4 em pull requests",
+    "description": "GitHub Action open-source que mede a prontidão para o Spring Boot 4, barra nova dívida de migração nos pull requests e sugere correções em 1 clique. Sem JDK, sem compilar."
+  },
+  "a11y": {
+    "skip": "Pular para o conteúdo",
+    "home": "Página inicial do Bootlift"
+  },
+  "nav": {
+    "label": "Principal",
+    "howItWorks": "Como funciona",
+    "playground": "Playground",
+    "rules": "Regras",
+    "docs": "Docs",
+    "contribute": "Contribua",
+    "github": "GitHub",
+    "githubStars": "Dar estrela ao Bootlift no GitHub, {count, plural, one {# estrela} other {# estrelas}}",
+    "githubNoCount": "Bootlift no GitHub",
+    "marketplace": "Marketplace",
+    "menuOpen": "Abrir menu",
+    "menuClose": "Fechar menu"
+  },
+  "locale": {
+    "label": "Idioma",
+    "en": "English",
+    "pt": "Português"
+  },
+  "hero": {
+    "title": "Migre para o Spring Boot 4 sem dívida de migração.",
+    "subtitle": "O Bootlift mede a prontidão para o Spring Boot 4 em cada pull request, reprova só pelas linhas que você adiciona e transforma correções em sugestões de 1 clique. Em segundos, sem JDK e sem compilar.",
+    "ctaPrimary": "Adicionar ao seu workflow",
+    "ctaSecondary": "Testar no playground",
+    "usesWhat": "o passo do workflow",
+    "meta": "Grátis e open source · MIT · {version}"
+  },
+  "copy": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyLabel": "Copiar {what}"
+  },
+  "footer": {
+    "tagline": "Prontidão para o Spring Boot 4, verificada em cada pull request.",
+    "product": "Produto",
+    "project": "Projeto",
+    "marketplace": "GitHub Marketplace",
+    "github": "Código no GitHub",
+    "license": "Licença MIT",
+    "contributing": "Guia de contribuição",
+    "madeBy": "Feito por",
+    "portfolio": "Portfólio",
+    "linkedin": "LinkedIn",
+    "version": "Versão atual {version}"
+  },
+  "prCard": {
+    "label": "Animação do pull request de demonstração do Bootlift. Código antigo enviado ao PR derruba o score de prontidão para o Spring Boot 4 de 94 para 60 e o check reprova. O Bootlift sugere trocar javax.servlet por jakarta.servlet; ao commitar a sugestão, o score volta a 94 e o check passa.",
+    "title": "feat: loga o tempo de cada requisição",
+    "readiness": "Prontidão para o Spring Boot 4",
+    "onMain": "na main",
+    "inPr": "neste PR",
+    "passing": "Aprovado",
+    "failing": "Reprovado",
+    "ruleMessage": "O Spring Boot 4 usa Jakarta EE 11 (jakarta.*)",
+    "commit": "Commit suggestion",
+    "committed": "Commit feito",
+    "pause": "Pausar animação",
+    "play": "Retomar animação",
+    "changes": "Alterações",
+    "footerMain": "Branch base, antes do PR",
+    "footerPass": "{n} de {total} sugestões commitadas",
+    "blocks": "Bloqueia o merge",
+    "noDebt": "Sem dívida nova",
+    "wasScore": "antes {score}",
+    "suggestedOf": "Alteração sugerida · {n} de {total}",
+    "emptyMain": "Nenhuma alteração na main ainda"
+  }
+}

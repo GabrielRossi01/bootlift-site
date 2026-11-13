@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored skill tooling and generated engine code.
+    ".claude/**",
+    ".agent/**",
+    ".gemini/**",
+    ".impeccable/**",
+    "src/lib/engine/**",
   ]),
 ]);
 

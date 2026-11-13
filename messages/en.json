@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Bootlift: Spring Boot 4 readiness check for pull requests",
+    "description": "Open-source GitHub Action that scores Spring Boot 4 readiness, blocks new migration debt in pull requests and suggests one-click fixes. No JDK, no build."
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "home": "Bootlift home"
+  },
+  "nav": {
+    "label": "Primary",
+    "howItWorks": "How it works",
+    "playground": "Playground",
+    "rules": "Rules",
+    "docs": "Docs",
+    "contribute": "Contribute",
+    "github": "GitHub",
+    "githubStars": "Star Bootlift on GitHub, {count, plural, one {# star} other {# stars}}",
+    "githubNoCount": "Bootlift on GitHub",
+    "marketplace": "Marketplace",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
+  },
+  "locale": {
+    "label": "Language",
+    "en": "English",
+    "pt": "Português"
+  },
+  "hero": {
+    "title": "Upgrade to Spring Boot 4 without the migration debt.",
+    "subtitle": "Bootlift scores Spring Boot 4 readiness on every pull request, fails only on the lines you add, and turns fixes into one-click suggestions. In seconds, with no JDK and no build.",
+    "ctaPrimary": "Add to your workflow",
+    "ctaSecondary": "Try the playground",
+    "usesWhat": "the workflow step",
+    "meta": "Free and open source · MIT · {version}"
+  },
+  "copy": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyLabel": "Copy {what}"
+  },
+  "footer": {
+    "tagline": "Spring Boot 4 readiness, checked on every pull request.",
+    "product": "Product",
+    "project": "Project",
+    "marketplace": "GitHub Marketplace",
+    "github": "Source on GitHub",
+    "license": "MIT License",
+    "contributing": "Contributing guide",
+    "madeBy": "Made by",
+    "portfolio": "Portfolio",
+    "linkedin": "LinkedIn",
+    "version": "Current release {version}"
+  },
+  "prCard": {
+    "label": "Animation of the Bootlift demo pull request. Old code pushed to the PR drops the Spring Boot 4 readiness score from 94 to 60 and the check fails. Bootlift suggests replacing javax.servlet with jakarta.servlet; committing the suggestion brings the score back to 94 and the check passes.",
+    "title": "feat: log request timing",
+    "readiness": "Spring Boot 4 readiness",
+    "onMain": "on main",
+    "inPr": "in this PR",
+    "passing": "Passing",
+    "failing": "Failing",
+    "ruleMessage": "Spring Boot 4 uses Jakarta EE 11 (jakarta.*)",
+    "commit": "Commit suggestion",
+    "committed": "Committed",
+    "pause": "Pause animation",
+    "play": "Play animation",
+    "changes": "Changes",
+    "footerMain": "Base branch, before the PR",
+    "footerPass": "{n} of {total} suggestions committed",
+    "blocks": "Blocks merge",
+    "noDebt": "No new debt",
+    "wasScore": "was {score}",
+    "suggestedOf": "Suggested change · {n} of {total}",
+    "emptyMain": "No changes on main yet"
+  }
+}

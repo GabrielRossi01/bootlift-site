@@ -1,0 +1,8 @@
+.next
+node_modules
+src/lib/engine
+.claude
+.agent
+.gemini
+.impeccable
+package-lock.json

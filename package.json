@@ -6,10 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier --write .",
+    "screenshots": "node scripts/screenshots.mjs http://localhost:3123 .impeccable/review"
   },
   "dependencies": {
+    "lucide-react": "^1.72.0",
+    "motion": "^14.13.0",
     "next": "16.4.6",
+    "next-intl": "^4.15.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -20,6 +25,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
+    "playwright-core": "^1.65.0",
+    "prettier": "^3.10.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "4.3.3",
     "typescript": "^5"
   }
