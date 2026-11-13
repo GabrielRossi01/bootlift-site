@@ -1,5 +1,5 @@
 export const site = {
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://bootlift.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://bootlift-site.vercel.app",
   version: "v1.0.1",
   uses: "GabrielRossi01/bootlift@v1",
   repo: "https://github.com/GabrielRossi01/bootlift",
